@@ -3,6 +3,7 @@ import mediapipe as mp
 import pyautogui
 from math import sqrt
 
+
 def clamp(val, min, max):
     if val > max:
         return max
@@ -10,14 +11,16 @@ def clamp(val, min, max):
         return min
     return val
 
+
 def map(v, range_min, range_max, map_min, map_max):
     ratio = (v - range_min) / (range_max - range_min)
     mapped_value = map_min + (ratio * (map_max - map_min))
     return mapped_value
 
- 
+
 def finger_dist(thumb, index):
     return sqrt((thumb.x - index.x) ** 2 + (thumb.y - index.y) ** 2 + (thumb.y - index.y) ** 2)
+
 
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
@@ -48,10 +51,10 @@ while cap.isOpened():
 
     # Convert the frame color from BGR to RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    
+
     # Process the frame and detect hands
     results = hands.process(frame_rgb)
-    
+
     # Draw hand annotations on the frame
     if results.multi_hand_landmarks:
         for idx, hand_landmarks in enumerate(zip(results.multi_hand_landmarks, results.multi_hand_world_landmarks)):
@@ -62,13 +65,16 @@ while cap.isOpened():
                 index_x = lm.landmark[8].x
                 index_y = lm.landmark[8].y
 
-                new_mouse_x = clamp(map(index_x, 0.2, 0.8, 0, screen_width), 0, screen_width)
-                new_mouse_y = clamp(map(index_y, 0.2, 0.8, 0, screen_height), 0, screen_height)
+                new_mouse_x = clamp(
+                    map(index_x, 0.2, 0.8, 0, screen_width), 0, screen_width)
+                new_mouse_y = clamp(
+                    map(index_y, 0.2, 0.8, 0, screen_height), 0, screen_height)
 
                 pyautogui.moveTo(new_mouse_x, new_mouse_y, _pause=False)
-            
+
             if results.multi_handedness[idx].classification[0].label == "Left":
-                left_thumb_index_dist = finger_dist(world_lm.landmark[4], world_lm.landmark[8])
+                left_thumb_index_dist = finger_dist(
+                    world_lm.landmark[4], world_lm.landmark[8])
                 if clicked and left_thumb_index_dist > 0.01:
                     clicked = False
 
@@ -77,12 +83,11 @@ while cap.isOpened():
                     print("Click!")
                     clicked = True
 
-            
             mp_drawing.draw_landmarks(frame, lm, mp_hands.HAND_CONNECTIONS)
 
     # Display the frame
     cv2.imshow('Hand Tracking', frame)
-    
+
     # Break the loop if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
