@@ -12,8 +12,8 @@ const test = () => {
 };
 const NestedCard = ({ title, description, selectCard }) => {
   return (
-    <Box onClick={test} sx={{ borderRadius: 0, width: 350, maxWidth: "100%", mx: "40px", mt: "20px", mb: "10px" }}>
-      <Card sx={{ borderRadius: 0, width: 350 }}>
+    <Box onClick={test} sx={{ borderRadius: 0, mx: "40px", mt: "20px", mb: "10px" }}>
+      <Card sx={{ borderRadius: 0, width: "100%", height: "100%" }}>
         <Button color="neutral" onClick={() => selectCard(title)} variant="plain">
           <CardContent sx={{ width: "100%", padding: 0 }}>
             {/* <Typography level="body-xs">IN DESIGN</Typography> */}
