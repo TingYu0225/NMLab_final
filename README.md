@@ -1,12 +1,18 @@
 # K-GESTURE: Kiosk with Gesture-Enabled Smart Touchless User Response Environment
 
-It is a final project of NMLab.
+A final project of NM Lab.
 
 `frontend`
 
-1. npm install
-2. npm start
+```
+npm install
+npm start
+```
 
 `backend`:
 
 `gesture`:
+```
+pip install -r requirements.txt
+python hand_tracking.py
+```
