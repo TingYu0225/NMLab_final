@@ -6,20 +6,21 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Typography from "@mui/joy/Typography";
 import { Box, Button, Stack } from "@mui/joy";
 
-function test() {
+const test = () => {
   console.log("click");
-}
-const NestedCard = ({ title, description }) => {
+  //  return <Redirect to="/" />;
+};
+const NestedCard = ({ title, description, selectCard }) => {
   return (
     <Box onClick={test} sx={{ borderRadius: 0, width: 350, maxWidth: "100%", mx: "40px", mt: "20px", mb: "10px" }}>
       <Card sx={{ borderRadius: 0, width: 350 }}>
-        <Button color="neutral" onClick={test} variant="plain">
+        <Button color="neutral" onClick={() => selectCard(title)} variant="plain">
           <CardContent sx={{ width: "100%", padding: 0 }}>
             {/* <Typography level="body-xs">IN DESIGN</Typography> */}
             <Typography level="title-lg">{title}</Typography>
           </CardContent>
         </Button>
-        <Button color="neutral" onClick={test} variant="plain">
+        <Button color="neutral" onClick={() => selectCard(title)} variant="plain">
           <Card orientation="horizontal" size="sm" sx={{ width: 300, bgcolor: "background.surface", borderRadius: 0, mb: 1 }}>
             <CardContent>
               {/* <Typography level="title-md">Sub project</Typography> */}

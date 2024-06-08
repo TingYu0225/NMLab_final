@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
-
+import { NMLabProvider } from "./containers/hooks/useNMLab";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <App />
+    <NMLabProvider>
+      <App />
+    </NMLabProvider>
   </React.StrictMode>
 );
 

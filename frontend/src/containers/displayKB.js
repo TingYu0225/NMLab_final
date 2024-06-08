@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
-import AdCard from "../components/adCard";
-import InfoCard from "../components/infoCard";
+
 import { useNMLab, NMLabProvider } from "./hooks/useNMLab";
+import Kb from "../components/keyboard/keyboard";
 
 const Wrapper = styled.div`
   height: 89vh;
@@ -14,10 +14,14 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  z-index: 1;
+  top: 40px;
+  left: 20px;
 `;
 // overflow-y: scroll;
 // background-color: #becbd3;
-export default function Register() {
+export default function DisplayKB() {
   const { name, setName } = useNMLab();
   const [password, setPassword] = React.useState("");
   const [phone_number, setPhoneNumber] = React.useState("");
@@ -27,14 +31,7 @@ export default function Register() {
   console.log("pass", setName);
   return (
     <Wrapper>
-      <Box display="flex" height="89vh" width={"35%"} alignItems="center" justifyContent="center" flexWrap="wrap" fontSize="80px">
-        Sign
-        <br />
-        Up
-      </Box>
-      <Box display="flex" height="89vh" width={"65%"} alignItems="center" bgcolor="#becbd3" justifyContent="center" flexWrap="wrap">
-        <InfoCard test={test} setName={setName} />
-      </Box>
+      <Kb />
     </Wrapper>
   );
 }

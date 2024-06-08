@@ -13,11 +13,14 @@ import Login from "./login";
 import SearchBar from "./searchBar";
 import Register from "./register";
 import { useNMLab } from "./hooks/useNMLab";
+import DisplayKB from "./displayKB";
+//https://docs.expo.dev/ui-programming/z-index/
 function App() {
   const { status, login, keyIn, setKeyIn, setStatus, setLogin } = useNMLab();
   return (
     <div className="App">
       <SearchBar keyIn={keyIn} setKeyIn={setKeyIn} />
+      <DisplayKB />
       <Router>
         <Switch>
           <HomeRoute exact path="/">
