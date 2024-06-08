@@ -7,7 +7,6 @@ import InfoCard from "../components/infoCard";
 import { useNMLab, NMLabProvider } from "./hooks/useNMLab";
 
 const Wrapper = styled.div`
-  height: 89vh;
   margin: 0; // top right bottom left
   display: flex;
   flex-direction: row;
@@ -18,23 +17,65 @@ const Wrapper = styled.div`
 // overflow-y: scroll;
 // background-color: #becbd3;
 export default function Register() {
-  const { name, setName } = useNMLab();
+  const { name, setName, keyIn, setKeyIn } = useNMLab();
   const [password, setPassword] = React.useState("");
   const [phone_number, setPhoneNumber] = React.useState("");
+  const [status, setStatus] = React.useState("");
   const test = () => {
-    console.log(name);
+    console.log(name); //50, 90, 130
+    window.scrollTo({ top: 50, left: 0, behavior: "smooth" });
   };
-  console.log("pass", setName);
+  useEffect(() => {
+    let pos = 0;
+    switch (status) {
+      case "name":
+        pos = 80;
+        break;
+      case "password":
+        pos = 120;
+        break;
+      case "phone_number":
+        pos = 160;
+        break;
+    }
+
+    window.scrollTo({ top: pos, left: 0, behavior: "smooth" });
+  }, [keyIn]);
+  const click = (ss) => {
+    setStatus(ss);
+    setKeyIn(true);
+  };
   return (
     <Wrapper>
-      <Box display="flex" height="89vh" width={"35%"} alignItems="center" justifyContent="center" flexWrap="wrap" fontSize="80px">
+      <Box
+        display="flex"
+        height="89vh"
+        width={"35%"}
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+        fontSize="80px"
+      >
         Sign
         <br />
         Up
       </Box>
-      <Box display="flex" height="89vh" width={"65%"} alignItems="center" bgcolor="#becbd3" justifyContent="center" flexWrap="wrap">
-        <InfoCard test={test} setName={setName} />
+      <Box
+        display="flex"
+        height="89vh"
+        width={"65%"}
+        alignItems="center"
+        bgcolor="#becbd3"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
+        <InfoCard test={test} setName={setName} click={click} />
       </Box>
+      {keyIn ? (
+        <Box height="40vh" width="100%">
+          hi
+        </Box>
+      ) : null}
     </Wrapper>
   );
 }
