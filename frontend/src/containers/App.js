@@ -20,7 +20,6 @@ function App() {
   return (
     <div className="App">
       <SearchBar keyIn={keyIn} setKeyIn={setKeyIn} />
-      <DisplayKB />
       <Router>
         <Switch>
           <HomeRoute exact path="/">
