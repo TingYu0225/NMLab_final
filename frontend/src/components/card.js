@@ -12,20 +12,26 @@ const test = () => {
 };
 const NestedCard = ({ title, description, selectCard }) => {
   return (
-    <Box onClick={test} sx={{ borderRadius: 0, width: 350, maxWidth: "100%", mx: "40px", mt: "20px", mb: "10px" }}>
-      <Card sx={{ borderRadius: 0, width: 350 }}>
+    <Box onClick={test} sx={{ borderRadius: 0, mx: "40px", mt: "20px", mb: "10px" }}>
+      <Card sx={{ borderRadius: 0, width: "100%", height: "100%" }}>
         <Button color="neutral" onClick={() => selectCard(title)} variant="plain">
           <CardContent sx={{ width: "100%", padding: 0 }}>
             {/* <Typography level="body-xs">IN DESIGN</Typography> */}
-            <Typography level="title-lg">{title}</Typography>
+            <Typography fontSize="4vh" level="title-lg">
+              {title}
+            </Typography>
           </CardContent>
         </Button>
         <Button color="neutral" onClick={() => selectCard(title)} variant="plain">
-          <Card orientation="horizontal" size="sm" sx={{ width: 300, bgcolor: "background.surface", borderRadius: 0, mb: 1 }}>
+          <Card orientation="horizontal" size="sm" sx={{ width: "90%", bgcolor: "background.surface", borderRadius: 0, mb: 1 }}>
             <CardContent>
               {/* <Typography level="title-md">Sub project</Typography> */}
-              <Typography level="body-sm">{description}</Typography>
-              <Typography level="body-sm">......blablabla......</Typography>
+              <Typography level="body-sm" fontSize="2.4vh">
+                {description}
+              </Typography>
+              <Typography level="body-sm" fontSize="2.4vh">
+                ......blablabla......
+              </Typography>
             </CardContent>
           </Card>
         </Button>
@@ -42,12 +48,12 @@ const NestedCard = ({ title, description, selectCard }) => {
             padding: 0,
           }}
         >
-          <Stack direction="row" sx={{ padding: 0, maxHeight: "70%" }}>
-            <Button variant="plain" onClick={test} sx={{ width: 175, margin: 0, padding: 0 }}>
+          <Stack direction="row" sx={{ padding: 0, maxHeight: "70%", width: "100%" }}>
+            <Button variant="plain" onClick={test} sx={{ width: "50%", margin: 0, padding: 0, fontSize: "2.5vh", justifyContent: "center" }}>
               this is a button
             </Button>
             <Divider orientation="vertical" sx={{ margin: 0 }} />
-            <Button variant="plain" onClick={test} sx={{ width: 175, margin: 0, padding: 0 }}>
+            <Button variant="plain" onClick={test} sx={{ width: "50%", margin: 0, padding: 0, fontSize: "2.5vh", justifyContent: "center" }}>
               this is also a button
             </Button>
           </Stack>

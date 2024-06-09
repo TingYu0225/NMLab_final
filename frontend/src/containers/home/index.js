@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 const Wrapper = styled.div`
   width: 70%;
-  height: 160h;
+  height: 100%;
   margin: 5px 5px 5px 5px; // top right bottom left
   display: flex;
   flex-direction: row;
@@ -32,7 +32,9 @@ export default function Home(props) {
   return (
     <Wrapper>
       {title.map((t, i) => (
-        <NestedCard title={t} description={description[i]} selectCard={selectCard} />
+        <Box width="50%" height="30%">
+          <NestedCard title={t} description={description[i]} selectCard={selectCard} />
+        </Box>
       ))}
     </Wrapper>
   );
