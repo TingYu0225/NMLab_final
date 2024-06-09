@@ -10,7 +10,7 @@ import { Box } from "@mui/joy";
 import { useNMLab } from "../containers/hooks/useNMLab";
 export default function InfoCard(props) {
   const { test, setName, click } = props;
-  const { keyIn, setKeyIn } = useNMLab();
+  const { keyIn, setKeyIn, phone_number, name, password } = useNMLab();
   const func = (newname) => {
     setName(newname);
     test();
@@ -33,17 +33,18 @@ export default function InfoCard(props) {
         label="Name"
         type="Name"
         variant="standard"
-        onChange={(e) => func(e.target.value)}
         onClick={() => {
           click("name");
         }}
+        value={name}
       />
       <TextField
         id="standard-password-input"
-        label="Password"
-        type="password"
+        label="pass"
+        type="pass"
         variant="standard"
         onClick={() => click("password")}
+        value={password}
       />
       <TextField
         id="standard-phone_number-input"
@@ -51,6 +52,7 @@ export default function InfoCard(props) {
         type="Phone number"
         variant="standard"
         onClick={() => click("phone_number")}
+        value={phone_number}
       />
       <CardContent>
         <Box

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import "./keyboard.css";
@@ -6,22 +6,22 @@ import Box from "@mui/material/Box";
 import { useNMLab } from "../../containers/hooks/useNMLab";
 export default function Kb() {
   const [layoutName, setLayoutName] = useState("default");
-  const [input, setInput] = useState("");
   const mainKeyboardRef = useRef(null);
   const numPadKeyboardRef = useRef(null);
-  const { keyIn, setKeyIn } = useNMLab();
+  const { keyIn, setKeyIn, input, setInput } = useNMLab();
+  useEffect(() => {
+    mainKeyboardRef.current.setInput(input);
+    numPadKeyboardRef.current.setInput(input);
+  }, [input]);
   const onChange = (input) => {
+    console.log("Input changed", input);
     setInput(input);
-    if (mainKeyboardRef.current) mainKeyboardRef.current.setInput(input);
-    if (numPadKeyboardRef.current) numPadKeyboardRef.current.setInput(input);
   };
   const onKeyPress = (button) => {
     console.log("Button pressed", button);
 
     if (button === "{shift}") handleShift();
-    if (button === "{enter}") {
-      setKeyIn(false);
-    }
+    if (button === "{enter}") setKeyIn(false);
   };
   const handleShift = () => {
     setLayoutName((prevLayoutName) =>
@@ -29,12 +29,6 @@ export default function Kb() {
     );
   };
 
-  const onChangeInput = (event) => {
-    const input = event.target.value;
-    setInput(input);
-    if (mainKeyboardRef.current) mainKeyboardRef.current.setInput(input);
-    if (numPadKeyboardRef.current) numPadKeyboardRef.current.setInput(input);
-  };
   const keyboardNumPadOptions = {
     layout: {
       default: [
@@ -45,6 +39,7 @@ export default function Kb() {
       ],
     },
   };
+
   //<input value={input} placeholder={"Tap on the virtual keyboard to start"} onChange={onChangeInput} />
   return (
     <Box

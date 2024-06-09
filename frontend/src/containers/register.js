@@ -17,17 +17,16 @@ const Wrapper = styled.div`
 // overflow-y: scroll;
 // background-color: #becbd3;
 export default function Register() {
-  const { name, setName, keyIn, setKeyIn } = useNMLab();
+  const { name, setName, keyIn, setKeyIn, inputStatus, setInputStatus } = useNMLab();
   const [password, setPassword] = React.useState("");
   const [phone_number, setPhoneNumber] = React.useState("");
-  const [status, setStatus] = React.useState("");
   const test = () => {
     console.log(name); //50, 90, 130
     window.scrollTo({ top: 50, left: 0, behavior: "smooth" });
   };
   useEffect(() => {
     let pos = 0;
-    switch (status) {
+    switch (inputStatus) {
       case "name":
         pos = 80;
         break;
@@ -42,7 +41,8 @@ export default function Register() {
     window.scrollTo({ top: pos, left: 0, behavior: "smooth" });
   }, [keyIn]);
   const click = (ss) => {
-    setStatus(ss);
+    console.log(ss);
+    setInputStatus(ss);
     setKeyIn(true);
   };
   return (
