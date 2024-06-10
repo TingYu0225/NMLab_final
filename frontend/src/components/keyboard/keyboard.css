@@ -22,6 +22,8 @@
   padding-right: 8px;
   width: 100%;
   justify-content: right;
+  background-color: rgb(204, 204, 204);
+  cursor: none;
 }
 
 .simple-keyboard.hg-theme-default.numTheme {
@@ -32,6 +34,8 @@
   padding-left: 3px;
   width: 100%;
   justify-content: right;
+  background-color: rgb(204, 204, 204);
+  cursor: none;
 }
 
 .numPad {
@@ -39,7 +43,8 @@
 }
 .hg-button.hg-height {
   border-radius: 7px;
-  height: 60px;
-  font-size: 28px;
+  height: 80px;
+  font-size: 35px;
   margin: 3px;
+  cursor: none;
 }
