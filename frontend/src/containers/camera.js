@@ -57,6 +57,7 @@ const Camera = () => {
               screenshotFormat="jpeg"
               videoConstraints={videoConstraints}
               onUserMedia={onUserMedia}
+              style={{ borderRadius: "40px" }}
             />
           </Box>
           <Box width={"28%"} fontSize={"100px"}>
@@ -69,7 +70,7 @@ const Camera = () => {
         url && (
           <>
             <Box width={"68%"}>
-              <img src={url} alt="Screenshot" />
+              <img src={url} alt="Screenshot" style={{ borderRadius: "40px" }}/>
             </Box>
             <Box
               width={"32%"}
@@ -79,7 +80,7 @@ const Camera = () => {
               alignItems="center"
             >
               <Box padding="20px" fontSize={"40px"} sx={{ mt: "30px" }}>
-                Is your entire face in the picture?
+                請確認您的臉在照片中
               </Box>
               <Box
                 height="30vh"
@@ -95,7 +96,7 @@ const Camera = () => {
                   }}
                   endIcon={<DoneOutlineIcon />}
                 >
-                  Confirm
+                  確認
                 </Button>
 
                 <Button
@@ -107,7 +108,7 @@ const Camera = () => {
                   }}
                   endIcon={<ReplayIcon />}
                 >
-                  Retry
+                  重試
                 </Button>
               </Box>
             </Box>

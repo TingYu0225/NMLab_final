@@ -57,7 +57,7 @@ export default function Register() {
         fontSize="80px"
         fontWeight={"bold"}
       >
-        即刻註冊
+        立即註冊
       </Box>
       <Box
         display="flex"

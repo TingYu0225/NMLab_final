@@ -10,7 +10,7 @@ const test = () => {
   console.log("click");
   //  return <Redirect to="/" />;
 };
-const NestedCard = ({ title, description, selectCard }) => {
+const NestedCard = ({ title, description, description2, selectCard }) => {
   return (
     <Box onClick={test} sx={{ borderRadius: 0, mx: "40px", mt: "20px", mb: "10px" }}>
       <Card sx={{ borderRadius: 0, width: "100%", height: "100%" }}>
@@ -28,6 +28,8 @@ const NestedCard = ({ title, description, selectCard }) => {
               {/* <Typography level="title-md">Sub project</Typography> */}
               <Typography level="body-sm" fontSize="3vh">
                 {description}
+                <br></br>
+                {description2}
               </Typography>
             </CardContent>
           </Card>
