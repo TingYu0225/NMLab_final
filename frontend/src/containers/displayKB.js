@@ -3,6 +3,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 
+import Switch from "@mui/material/Switch";
+import Paper from "@mui/material/Paper";
+import Slide from "@mui/material/Slide";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
 import { useNMLab, NMLabProvider } from "./hooks/useNMLab";
 import Kb from "../components/keyboard/keyboard";
 
@@ -21,17 +26,30 @@ const Wrapper = styled.div`
 `;
 // overflow-y: scroll;
 // background-color: #becbd3;
+// <Paper sx={{ m: 1 }} elevation={4}>
 export default function DisplayKB() {
-  const { name, setName } = useNMLab();
-  const [password, setPassword] = React.useState("");
-  const [phone_number, setPhoneNumber] = React.useState("");
-  const test = () => {
-    console.log(name);
-  };
-  console.log("pass", setName);
+  const [checked, setChecked] = React.useState(false);
+  const { keyIn } = useNMLab();
+
   return (
-    <Wrapper>
-      <Kb />
-    </Wrapper>
+    <Box
+      sx={{
+        zIndex: 10,
+        width: "100%",
+        justifyContent: "center",
+        display: "flex",
+      }}
+    >
+      <Box
+        sx={{
+          zIndex: 10,
+          width: "100%",
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
+        <Kb />
+      </Box>
+    </Box>
   );
 }
