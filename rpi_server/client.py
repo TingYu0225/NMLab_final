@@ -4,7 +4,7 @@ import hashlib
 import base64
 from tpm2_pytss.FAPI import FAPI
 
-server_url = "http://172.20.10.3:5000"
+server_url = "http://172.20.10.3:8080"
 fapi = FAPI()
 
 def encoder(bytes_array):

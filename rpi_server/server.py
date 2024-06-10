@@ -17,6 +17,11 @@ import binascii
 import face_recognition
 import numpy as np
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
 app = Flask(__name__)
 
 registering=''
@@ -41,25 +46,12 @@ def decoder(data_str):
     data_bytes = base64.b64decode(data_str)
     return data_bytes
 
-brian_image = face_recognition.load_image_file("brian.jpg")
-brian_face_encoding = face_recognition.face_encodings(brian_image)[0]
-
-hello_image = face_recognition.load_image_file("hello.jpg")
-hello_face_encoding = face_recognition.face_encodings(hello_image)[0]
-
-dragon_image = face_recognition.load_image_file("dragon.jpg")
-dragon_face_encoding = face_recognition.face_encodings(dragon_image)[0]
-
 # Create arrays of known face encodings and their names
 known_face_encodings = [
-    brian_face_encoding,
-    hello_face_encoding,
-    dragon_face_encoding
+
 ]
 known_face_names = [
-    "brian",
-    "hello",
-    "dragon"
+ 
 ]
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -167,17 +159,20 @@ def rpirequestreg():
             return jsonify({'status': 'success', 'pending': False})
 
 
-@app.route('/frontendrequestreg', methods=['GET', 'POST'])
+@app.route('/frontendrequestreg',methods=['POST'])
 def frontendrequestreg():
     if request.method == 'POST':
+        print("2")
         data = request.json
+        print(data)
         username = data['username']
-        reg_image = face_recognition.load_image_file("dragon.jpg") #input image
-        reg_face_encoding = face_recognition.face_encodings(reg_image)[0]
-        global known_face_encodings
-        known_face_encodings.append(reg_face_encoding)
-        global known_face_names
-        known_face_names.append(username)
+       
+        #reg_image = face_recognition.load_image_file("dragon.jpg") #input image
+        #reg_face_encoding = face_recognition.face_encodings(reg_image)[0]
+        #global known_face_encodings
+        #known_face_encodings.append(reg_face_encoding)
+        #global known_face_names
+        #known_face_names.append(username)
         global registering
         registering=username
         return jsonify({'status': 'success', 'waiting': True})
@@ -240,4 +235,4 @@ def frontendchecklog():
 
 
 if __name__ == '__main__':
-    app.run(host='172.20.10.3', port=5000)
+    app.run(host='172.20.10.3', port=8080)
