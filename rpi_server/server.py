@@ -14,6 +14,9 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 from Crypto.Hash import SHA256
 import binascii
+import face_recognition
+import numpy as np
+
 app = Flask(__name__)
 
 registering=''
@@ -37,6 +40,27 @@ flags = {
 def decoder(data_str):
     data_bytes = base64.b64decode(data_str)
     return data_bytes
+
+brian_image = face_recognition.load_image_file("brian.jpg")
+brian_face_encoding = face_recognition.face_encodings(brian_image)[0]
+
+hello_image = face_recognition.load_image_file("hello.jpg")
+hello_face_encoding = face_recognition.face_encodings(hello_image)[0]
+
+dragon_image = face_recognition.load_image_file("dragon.jpg")
+dragon_face_encoding = face_recognition.face_encodings(dragon_image)[0]
+
+# Create arrays of known face encodings and their names
+known_face_encodings = [
+    brian_face_encoding,
+    hello_face_encoding,
+    dragon_face_encoding
+]
+known_face_names = [
+    "brian",
+    "hello",
+    "dragon"
+]
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -121,6 +145,8 @@ def login():
             if valid_signature:
                 print(DB)
                 print("成功")
+                global loginDone
+                loginDone=True
                 return jsonify({'status': 'success', 'message': '註冊成功', 'flag': username })
             else:
                 print(DB)
@@ -155,6 +181,37 @@ def frontendcheckreg():
         global registerDone
         if registerDone:
             registerDone=False
+            return jsonify({'status': 'success', 'done': True,})
+        else:
+            return jsonify({'status': 'success', 'done': False})
+
+      
+@app.route('/rpirequestlog', methods=['GET', 'POST'])
+def rpirequestlog():
+    if request.method == 'GET':
+        global logging
+        if logging != '':
+            name=logging
+            logging=''
+            return jsonify({'status': 'success', 'pending': True, 'name': name})
+        else:
+            return jsonify({'status': 'success', 'pending': False})
+
+
+@app.route('/frontendrequestlog', methods=['GET', 'POST'])
+def frontendrequestlog():
+    if request.method == 'GET':
+        global logging
+        username=request.args.get('username')
+        logging=username
+        return jsonify({'status': 'success', 'waiting': True})
+    
+@app.route('/frontendchecklog', methods=['GET', 'POST'])
+def frontendchecklog():
+    if request.method == 'GET':
+        global loginDone
+        if loginDone:
+            loginDone=False
             return jsonify({'status': 'success', 'done': True,})
         else:
             return jsonify({'status': 'success', 'done': False})
