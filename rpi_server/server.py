@@ -16,9 +16,11 @@ from Crypto.Hash import SHA256
 import binascii
 import face_recognition
 import numpy as np
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 
 registering=''
 logging=''
@@ -195,7 +197,6 @@ def rpirequestlog():
         else:
             return jsonify({'status': 'success', 'pending': False})
 
-
 @app.route('/frontendrequestlog', methods=['GET', 'POST'])
 def frontendrequestlog():
     if request.method == 'POST':
@@ -228,7 +229,13 @@ def frontendchecklog():
             return jsonify({'status': 'success', 'done': True,})
         else:
             return jsonify({'status': 'success', 'done': False})
-
+        
+@app.route("/user/upload", methods=["POST"])
+def user_upload():
+    print(request.form)
+    image_file = request.form.get('image')
+    print(image_file)
+    return "ok"
 
 if __name__ == '__main__':
-    app.run(host='172.20.10.3', port=8080)
+    app.run(host='0,0,0,0', port=8080)
