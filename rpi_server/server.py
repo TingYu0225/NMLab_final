@@ -169,9 +169,16 @@ def rpirequestreg():
 
 @app.route('/frontendrequestreg', methods=['GET', 'POST'])
 def frontendrequestreg():
-    if request.method == 'GET':
+    if request.method == 'POST':
+        data = request.json
+        username = data['username']
+        reg_image = face_recognition.load_image_file("dragon.jpg") #input image
+        reg_face_encoding = face_recognition.face_encodings(reg_image)[0]
+        global known_face_encodings
+        known_face_encodings.append(reg_face_encoding)
+        global known_face_names
+        known_face_names.append(username)
         global registering
-        username=request.args.get('username')
         registering=username
         return jsonify({'status': 'success', 'waiting': True})
     
@@ -200,11 +207,26 @@ def rpirequestlog():
 
 @app.route('/frontendrequestlog', methods=['GET', 'POST'])
 def frontendrequestlog():
-    if request.method == 'GET':
-        global logging
-        username=request.args.get('username')
-        logging=username
-        return jsonify({'status': 'success', 'waiting': True})
+    if request.method == 'POST':
+        data = request.json
+        #username = data['username']
+        log_image = face_recognition.load_image_file("dragon.jpg") #input image
+        log_face_encoding = face_recognition.face_encodings(log_image)[0]
+        matches = face_recognition.compare_faces(known_face_encodings, log_face_encoding)
+
+        face_distances = face_recognition.face_distance(known_face_encodings, log_face_encoding)
+        best_match_index = np.argmin(face_distances)
+
+        if matches[best_match_index]:
+            global known_face_names
+            name = known_face_names[best_match_index]
+            global logging
+            logging=name
+            return jsonify({'status': 'success', 'waiting': True, 'username':name})
+        
+        return jsonify({'status': 'success', 'waiting': False})
+
+        
     
 @app.route('/frontendchecklog', methods=['GET', 'POST'])
 def frontendchecklog():
