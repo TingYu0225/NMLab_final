@@ -46,7 +46,7 @@ const NMLabProvider = (props) => {
     navigate("/register");
   };
   useEffect(() => {
-    client.open("POST", "http:/localhost:3000/set_mode", true);
+    client.open("POST", "http://localhost:5500/set_mode", true);
     client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (keyIn) client.send("mode=keyboard");
     else client.send("mode=normal");
