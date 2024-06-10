@@ -17,6 +17,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNMLab } from "./hooks/useNMLab";
 import { useEffect, useState } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import { Navigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -57,12 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = ({ keyIn, setKeyIn }) => {
+const SearchBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { search, setInputStatus } = useNMLab();
+  const { search, setInputStatus, setKeyIn, keyIn } = useNMLab();
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -126,22 +131,8 @@ const SearchBar = ({ keyIn, setKeyIn }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      
+      
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -168,18 +159,25 @@ const SearchBar = ({ keyIn, setKeyIn }) => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={() => {
-              window.location.href = "/";
+              console.log("hi");
+              navigate("/");
+              return;
             }}
           >
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
+            onClick={() => {
+              // will rerender the whole web page
+              // window.location.href = "/";
+              navigate("/");
+            }}
           >
-            {keyIn ? "KeyIn" : "NotKeyIn"}
+            K-GESTURE
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -194,20 +192,7 @@ const SearchBar = ({ keyIn, setKeyIn }) => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            
             <IconButton
               size="large"
               edge="end"

@@ -48,11 +48,12 @@ export default function Kb() {
         position: "fixed",
         bottom: "0",
       }}
+      caretHidden="true"
     >
       <div class="kb">
         <Box
           sx={{
-            width: "90%",
+            width: "80%",
             margin: "0",
           }}
         >
