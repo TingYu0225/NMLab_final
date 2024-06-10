@@ -7,7 +7,7 @@
     <script>
         function setMode(mode) {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://192.168.31.78:5500/set_mode", true);
+            xhr.open("POST", "http://127.0.0.1:5500/set_mode", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send('mode=' + mode);
         }

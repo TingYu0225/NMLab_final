@@ -1,2 +1,9 @@
 gesture/__pycache__/*
 gesture/__pycache__
+gesture/number_gesture/*.csv
+gesture/pinch_gesture/*.csv
+
+.DS_Store
+gesture/.DS_Store
+gesture/number_gesture/.DS_Store
+gesture/pinch_gesture/.DS_Store
