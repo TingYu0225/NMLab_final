@@ -3,3 +3,6 @@ mediapipe
 pyautogui
 numpy
 flask
+cmake (not necessary if you can install dlib directly)
+dlib
+face_recognition
