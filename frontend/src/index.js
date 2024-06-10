@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { NMLabProvider } from "./containers/hooks/useNMLab";
+import { BrowserRouter } from "react-router-dom";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <NMLabProvider>
-      <App />
-    </NMLabProvider>
+    <BrowserRouter>
+      <NMLabProvider>
+        <App />
+      </NMLabProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

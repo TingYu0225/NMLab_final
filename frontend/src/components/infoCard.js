@@ -1,20 +1,60 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { TextField } from "@mui/material";
 import { Box } from "@mui/joy";
 import { useNMLab } from "../containers/hooks/useNMLab";
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import LoadingButton from "@mui/lab/LoadingButton";
 export default function InfoCard(props) {
   const { test, setName, click } = props;
-  const { keyIn, setKeyIn, phone_number, name, password } = useNMLab();
-  const func = (newname) => {
-    setName(newname);
-    test();
-  };
+  const { keyIn, setKeyIn, phone_number, name, password, saveFace, takephoto } =
+    useNMLab();
+
+  const textFieldRef = React.useRef(null);
+  React.useEffect(() => {
+    textFieldRef.current.focus();
+  }, []);
+  console.log("info", saveFace);
+  const status = () => {
+    switch (saveFace) {
+      case "true":
+        return (
+          <Button variant="contained" endIcon={<DoneOutlineIcon />} disabled={true}>
+            <Typography fontSize="20px" component="div">
+              Face Recorded
+            </Typography>
+          </Button>
+        );
+      case "false":
+        return (
+          <Button variant="contained" endIcon={<CameraAltIcon />} onClick={takephoto}>
+            <Typography fontSize="20px" component="div">
+              Record Face
+            </Typography>
+          </Button>
+        );
+      case "pending":
+        return (
+          <LoadingButton loading variant="outlined" endIcon={<CameraAltIcon />}>
+            <Typography fontSize="20px" component="div">
+              Record Face
+            </Typography>
+          </LoadingButton>
+        );
+      default:
+        return (
+          <Button variant="contained" endIcon={<CameraAltIcon />}>
+            <Typography fontSize="20px" component="div">
+              Face Recorded
+            </Typography>
+          </Button>
+        );
+    }
+  }; //autofocus={keyIn ? "true" : "false"}
   return (
     <Card sx={{ maxWidth: 360 }}>
       <Box
@@ -29,6 +69,7 @@ export default function InfoCard(props) {
         </Typography>
       </Box>
       <TextField
+        required
         id="standard-name-input"
         label="Name"
         type="Name"
@@ -36,16 +77,28 @@ export default function InfoCard(props) {
         onClick={() => {
           click("name");
         }}
+        defaultValue={name}
         value={name}
+        inputRef={textFieldRef}
       />
-      <TextField
+
+      <Box
+        sx={{ m: 3, mb: 0, fontSize: "1rem" }}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
+        {status()}
+      </Box>
+      {/* <TextField
         id="standard-password-input"
-        label="pass"
+        label="Password"
         type="pass"
         variant="standard"
         onClick={() => click("password")}
         value={password}
-      />
+      /> 
       <TextField
         id="standard-phone_number-input"
         label="Phone number"
@@ -53,16 +106,19 @@ export default function InfoCard(props) {
         variant="standard"
         onClick={() => click("phone_number")}
         value={phone_number}
-      />
+      />*/}
       <CardContent>
         <Box
-          sx={{ height: 70, mb: 2 }}
+          sx={{ height: 50, mb: 2, mt: 0 }}
           display="flex"
           alignItems="center"
           justifyContent="center"
           flexWrap="wrap"
         >
-          <Button variant="outlined">
+          <Button
+            variant="outlined"
+            disabled={saveFace == "true" ? (name != "" ? false : true) : true}
+          >
             <Typography fontSize="20px" component="div">
               Sign up
             </Typography>

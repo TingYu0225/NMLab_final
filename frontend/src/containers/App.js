@@ -1,12 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
-import { Switch, BrowserRouter as Router } from "react-router-dom";
-import { Route } from "react-router-dom";
-import HomeRoute from "../components/routes/homeRoute";
-import LoginRoute from "../components/routes/loginRoute";
-import ProtectedRoute from "../components/routes/protectedRoute";
-import RegisterRoute from "../components/routes/registerRoute";
+import { Route, Routes } from "react-router-dom";
 
 import Home from "./home";
 import Login from "./login";
@@ -14,29 +9,24 @@ import SearchBar from "./searchBar";
 import Register from "./register";
 import { useNMLab } from "./hooks/useNMLab";
 import DisplayKB from "./displayKB";
+import Camera from "./camera";
+
 //https://docs.expo.dev/ui-programming/z-index/
 function App() {
-  const { status, login, keyIn, setKeyIn, setStatus, setLogin } = useNMLab();
+  const { keyIn } = useNMLab();
+  console.log("keyIn", keyIn);
   return (
     <div className="App">
-      <SearchBar keyIn={keyIn} setKeyIn={setKeyIn} />
+      <SearchBar />
       {keyIn ? <DisplayKB /> : null}
-      <Router>
-        <Switch>
-          <HomeRoute exact path="/">
-            <Home login={login} setLogin={setLogin} />
-          </HomeRoute>
-          <LoginRoute exact path="/login">
-            <Login />
-          </LoginRoute>
-          <RegisterRoute exact path="/register">
-            <Register />
-          </RegisterRoute>
-          {/* <ProtectedRoute login={login}>
-            <Login />
-          </ProtectedRoute> */}
-        </Switch>
-      </Router>
+      <Routes>
+        <Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/camera" element={<Camera />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

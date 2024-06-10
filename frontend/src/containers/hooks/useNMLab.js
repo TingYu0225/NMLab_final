@@ -1,14 +1,20 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
 const NMLabContext = createContext({
   login: false,
   name: "",
   num: 0,
   keyIn: false,
   input: "",
+  reset: false,
   inputStatus: "",
   phone_number: "",
   password: "",
   search: "",
+  saveFace: "false",
+  countDown: 0,
+  takephoto: () => {},
+  sendphoto: () => {},
 });
 const NMLabProvider = (props) => {
   const [login, setLogin] = useState(false);
@@ -20,6 +26,51 @@ const NMLabProvider = (props) => {
   const [phone_number, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [search, setSearch] = useState("");
+  const [saveFace, setSaveFace] = useState("false");
+  const [countDown, setCountDown] = useState(5);
+  const navigate = useNavigate();
+  const [reset, setReset] = useState(false);
+  let timer = useRef();
+  const takephoto = () => {
+    setSaveFace("processing");
+    navigate("/camera");
+  };
+  const sendphoto = ({ url }) => {
+    setSaveFace("pending");
+    console.log("hi setSaveFace");
+    navigate("/register");
+  };
+  useEffect(() => {
+    console.log("hi saveFace", saveFace);
+    setCountDown(5);
+    if (saveFace === "processing" || saveFace === "retry") {
+      timer.current = setInterval(() => {
+        console.log("hi count", countDown);
+        setCountDown((prevCount) => {
+          return prevCount - 1;
+        });
+      }, 1000);
+    }
+  }, [saveFace]);
+  useEffect(() => {
+    if (countDown <= 0) clearInterval(timer.current);
+  }, [countDown]);
+
+  useEffect(() => {
+    if (reset) {
+      setReset(false);
+      setLogin(false);
+      setSaveFace("false");
+      setSearch("");
+      setInputStatus("");
+      setInput("");
+      setName("");
+      setNum(0);
+      setKeyIn(false);
+    }
+  }, [reset]);
+
+  // init input
   useEffect(() => {
     if (!keyIn) {
       setInput("");
@@ -47,6 +98,7 @@ const NMLabProvider = (props) => {
       }
     }
   }, [keyIn, inputStatus]);
+  //keyboard input display
   useEffect(() => {
     // This effect will run after every render
     if (keyIn) {
@@ -80,12 +132,19 @@ const NMLabProvider = (props) => {
         password,
         phone_number,
         search,
+        saveFace,
+        countDown,
+        sendphoto,
+        takephoto,
+        setSaveFace,
+        setSearch,
         setInputStatus,
         setInput,
         setLogin,
         setName,
         setNum,
         setKeyIn,
+        setReset,
       }}
       {...props}
     />

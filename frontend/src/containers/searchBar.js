@@ -17,6 +17,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNMLab } from "./hooks/useNMLab";
 import { useEffect, useState } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import { Navigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -57,12 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = ({ keyIn, setKeyIn }) => {
+const SearchBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { search, setInputStatus } = useNMLab();
+  const { search, setInputStatus, setKeyIn, keyIn } = useNMLab();
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -168,18 +173,25 @@ const SearchBar = ({ keyIn, setKeyIn }) => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={() => {
-              window.location.href = "/";
+              console.log("hi");
+              navigate("/");
+              return;
             }}
           >
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
+            onClick={() => {
+              // will rerender the whole web page
+              // window.location.href = "/";
+              navigate("/");
+            }}
           >
-            {keyIn ? "KeyIn" : "NotKeyIn"}
+            K-GESTURE
           </Typography>
           <Search>
             <SearchIconWrapper>
