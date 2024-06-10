@@ -48,6 +48,7 @@ export default function Kb() {
         position: "fixed",
         bottom: "0",
       }}
+      caretHidden="true"
     >
       <div class="kb">
         <Box

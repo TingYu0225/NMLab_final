@@ -69,11 +69,10 @@ export default function InfoCard(props) {
         </Typography>
       </Box>
       <TextField
-        required
-        id="standard-name-input"
+        id="filled-search"
+        variant="filled"
         label="Name"
         type="Name"
-        variant="standard"
         onClick={() => {
           click("name");
         }}

@@ -1,5 +1,10 @@
 import { useContext, createContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
+
+var XMLHttpRequest = require("xhr2");
+
+var client = new XMLHttpRequest();
+
 const NMLabContext = createContext({
   login: false,
   name: "",
@@ -40,6 +45,12 @@ const NMLabProvider = (props) => {
     console.log("hi setSaveFace");
     navigate("/register");
   };
+  useEffect(() => {
+    client.open("POST", "http:/localhost:3000/set_mode", true);
+    client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    if (keyIn) client.send("mode=keyboard");
+    else client.send("mode=normal");
+  }, [keyIn]);
   useEffect(() => {
     console.log("hi saveFace", saveFace);
     setCountDown(5);

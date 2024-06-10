@@ -22,7 +22,8 @@
     "react-webcam": "^7.2.0",
     "simple-keyboard": "^3.7.83",
     "styled-components": "^6.1.11",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xhr2": "^0.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

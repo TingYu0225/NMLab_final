@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import { useNMLab } from "../hooks/useNMLab";
 import { useNavigate } from "react-router";
+import AdCard from "../../components/adCard";
 const Wrapper = styled.div`
   width: 70%;
   height: 100%;
@@ -29,9 +30,10 @@ const description = [
   "遊戲點數, 停車費, ETC, 罰單, 信用卡, 保險",
   "OPEN POINT, 小7集點卡, 銀行, 證券保險, 高鐵",
   "電影票, 火車票, 飯店, 機票, 租車",
-  "門市預購, 交貨便, 把你啊罵吃掉, 網購, 國際快遞",
+  "門市預購, 交貨便, 把你啊罵賣掉, 網購, 快遞",
   "雲端列印, 文件/圖片/海報列印, 4x6相片列印,",
 ];
+const ad = ["Javascript從入門到入土"];
 export default function Home(props) {
   const { login, setLogin } = useNMLab();
   const navigate = useNavigate();
@@ -40,12 +42,17 @@ export default function Home(props) {
     else if (title === "列印/掃描") navigate("/login");
   };
   return (
-    <Wrapper>
-      {title.map((t, i) => (
-        <Box width="50%" height="30%">
-          <NestedCard title={t} description={description[i]} selectCard={selectCard} />
-        </Box>
-      ))}
-    </Wrapper>
+    <Box display="flex">
+      <Wrapper>
+        {title.map((t, i) => (
+          <Box width="50%" height="30%">
+            <NestedCard title={t} description={description[i]} selectCard={selectCard} />
+          </Box>
+        ))}
+      </Wrapper>
+      <Box width="30%" sx={{ m: "5px", mt: "25px" }}>
+        <AdCard />
+      </Box>
+    </Box>
   );
 }
