@@ -17,10 +17,6 @@ import binascii
 import face_recognition
 import numpy as np
 
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
 
 app = Flask(__name__)
 

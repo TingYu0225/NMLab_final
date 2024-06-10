@@ -12,6 +12,7 @@ def is_keyboard_mode():
 def set_mode():
     global use_keyboard
     mode = request.form.get('mode')
+    print(mode)
     if mode == 'normal':
         use_keyboard = False
     elif mode == 'keyboard':
@@ -19,6 +20,6 @@ def set_mode():
     return 'Mode changed', 200
 
 def start_server():
-    server_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5500})
+    server_thread = Thread(target=app.run, kwargs={'host': '172.20.10.3', 'port': 5500})
     server_thread.daemon = True
     server_thread.start()
