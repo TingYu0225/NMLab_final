@@ -14,10 +14,7 @@ export default function InfoCard(props) {
   const { keyIn, setKeyIn, phone_number, name, password, saveFace, takephoto } =
     useNMLab();
 
-  const textFieldRef = React.useRef(null);
-  React.useEffect(() => {
-    textFieldRef.current.focus();
-  }, []);
+
   console.log("info", saveFace);
   const status = () => {
     switch (saveFace) {
@@ -80,7 +77,6 @@ export default function InfoCard(props) {
         inputProps={{style:{fontSize:30}}}
         defaultValue={name}
         value={name}
-        inputRef={textFieldRef}
       />
 
       <Box

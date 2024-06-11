@@ -35,13 +35,14 @@ mp_drawing = mp.solutions.drawing_utils
 
 # Load models
 pinch_model = tf.keras.models.load_model('pinch_gesture/pinch_model.keras')
-number_model = tf.keras.models.load_model('number_gesture/number_model.keras')
+number_model = tf.keras.models.load_model('number_gesture/number_model_3.keras')
 tf.keras.utils.disable_interactive_logging()
 
 lm_arr_histoty = []
 lm_arr_history_time = []
 
-number_ges_dict = {2: 0, 1: 1, 4: 2, 3: 3, 0: 4}
+# number_ges_dict = {2: 0, 1: 1, 4: 2, 3: 3, 0: 4}
+number_ges_dict = {3: -1, 2: 0, 1: 1, 5: 2, 4: 3, 0: 4}
 
 # Capture video from the webcam
 cap = cv2.VideoCapture(0)
@@ -82,8 +83,18 @@ while cap.isOpened():
             label = results.multi_handedness[idx].classification[0].label
 
             if label == 'Right' and is_keyboard_mode():
-                # detect cursor drag
-                if is_pinch(world_lm):
+
+                arr = lm_to_np(lm, is_left=False)
+
+                after_tf = align_points(arr[0], arr[5], arr[17], arr)
+                after_tf = remove_reference_points(after_tf)
+                after_tf = np.reshape(after_tf, (1, 57))
+                
+                predictions = number_model.predict(after_tf)
+                predicted_class = number_ges_dict[np.argmax(predictions, axis=1)[0]]
+
+                # is pinch
+                if predicted_class == -1:
                     if is_dragging:
                         new_cursor_pos = round((lm.landmark[8].x - start_x_coord) * 30)
                         if new_cursor_pos > cursor_pos:
@@ -100,29 +111,60 @@ while cap.isOpened():
                         pyautogui.moveTo(2180 / 2, 670 / 2, _pause=False) # only works on my computer
                         pyautogui.click(_pause=False)
                         cursor_pos = 0
-
-                # detect number of fingers
+                # is number
                 else:
                     is_dragging = False
-
-                    arr = lm_to_np(lm, is_left=False)
-
-                    after_tf = align_points(arr[0], arr[5], arr[17], arr)
-                    after_tf = remove_reference_points(after_tf)
-                    after_tf = np.reshape(after_tf, (1, 57))
-
-                    # Make prediction
-                    predictions = number_model.predict(after_tf)
-                    predicted_class = np.argmax(predictions, axis=1)
-                    finger_count = number_ges_dict[predicted_class[0]]
 
                     index_x = lm.landmark[8].x
                     index_y = lm.landmark[8].y
 
                     new_mouse_x = clamp(map(index_x, 0.2, 0.8, 0, screen_width), 0, screen_width)
-                    new_mouse_y = screen_height - 20 - (5 - finger_count) * 80
+                    new_mouse_y = screen_height - 20 - (5 - predicted_class) * 80
 
                     pyautogui.moveTo(new_mouse_x, new_mouse_y, _pause=False)
+
+
+                # detect cursor drag
+                # if is_pinch(world_lm):
+                #     if is_dragging:
+                #         new_cursor_pos = round((lm.landmark[8].x - start_x_coord) * 30)
+                #         if new_cursor_pos > cursor_pos:
+                #             for i in range(new_cursor_pos - cursor_pos):
+                #                 pyautogui.press('right', _pause=False)
+                #         else:
+                #             for i in range(cursor_pos - new_cursor_pos):
+                #                 pyautogui.press('left', _pause=False)
+                #         cursor_pos = new_cursor_pos
+                    
+                #     else:
+                #         is_dragging = True
+                #         start_x_coord = lm.landmark[8].x
+                #         pyautogui.moveTo(2180 / 2, 670 / 2, _pause=False) # only works on my computer
+                #         pyautogui.click(_pause=False)
+                #         cursor_pos = 0
+
+                # # detect number of fingers
+                # else:
+                #     is_dragging = False
+
+                #     arr = lm_to_np(lm, is_left=False)
+
+                #     after_tf = align_points(arr[0], arr[5], arr[17], arr)
+                #     after_tf = remove_reference_points(after_tf)
+                #     after_tf = np.reshape(after_tf, (1, 57))
+
+                #     # Make prediction
+                #     predictions = number_model.predict(after_tf)
+                #     predicted_class = np.argmax(predictions, axis=1)
+                #     finger_count = number_ges_dict[predicted_class[0]]
+
+                #     index_x = lm.landmark[8].x
+                #     index_y = lm.landmark[8].y
+
+                #     new_mouse_x = clamp(map(index_x, 0.2, 0.8, 0, screen_width), 0, screen_width)
+                #     new_mouse_y = screen_height - 20 - (5 - finger_count) * 80
+
+                #     pyautogui.moveTo(new_mouse_x, new_mouse_y, _pause=False)
 
             elif label == 'Right' and not is_keyboard_mode():
                 # detect scroll gesture
