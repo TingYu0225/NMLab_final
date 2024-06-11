@@ -20,7 +20,7 @@ const serviceName = ["雲端列印", "代碼列印", "檔案列印", "影印", "
 // overflow-y: scroll;
 // background-color: #becbd3;
 export default function FileMenu() {
-  const { fileName, chooseFile, takeFile } = useNMLab();
+  const { fileName, chooseFile, takeFile, reset } = useNMLab();
   console.log(fileName.length == 0);
   if (fileName.length === 0) {
     return (
@@ -37,7 +37,7 @@ export default function FileMenu() {
         <Typography variant="h2" fontWeight="bold" align="center" margin="20px">
           沒有文件
         </Typography>
-        <Button variant="contained" sx={{ fontSize: "30px" }}>
+        <Button variant="contained" sx={{ fontSize: "30px" }} onClick={reset}>
           返回主頁面
         </Button>
       </Wrapper>

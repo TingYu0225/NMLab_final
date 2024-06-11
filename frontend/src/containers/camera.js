@@ -68,7 +68,6 @@ const Camera = () => {
             />
           </Box>
           <Box width={"28%"} fontSize={"100px"}>
-            <button onClick={capturePhoto}>Capture</button>
             {countDown}
             {/* <button onClick={() => start()}>Refresh</button> */}
           </Box>
@@ -126,51 +125,3 @@ const Camera = () => {
 };
 
 export default Camera;
-/*export const uploadImage = (fileObj) => dispatch => {
-
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Accept': 'image/jpeg'
-    },
-    body: fileObj
-  })
-    .then((response) => response.json())
-    .then(function (response) {
-      if (response.status === 'success') {
-        console.log(response);
-        // ... Show feedback
-        return response
-      } else {
-        // ... Show feedback
-      }
-    })
-    .catch((error) => {
-      console.error(error)
-    });
-}
-*/
-/*var params = { 
-    Bucket: 'bucketName', 
-    Key: Date.now() + '.jpg',
-    ContentType: 'image/jpeg',
-    Body: event.body,
-    ACL: "public-read"
-  };
-  return uploading = new Promise(function (resolve, reject) {
-    return s3.upload(params, function (err, data) {
-      if(err) {
-        state.uploadError = err
-        return reject({
-          error: err,
-          status: 'error',
-          message: 'something went wrong'
-        })
-      }
-      state.uploadData = data
-      state.fileLocation = data.Location
-      state.status = "success"
-      state.message = "File has been uploaded to the fileLocation"
-      return resolve(data)
-    });
-  }) */

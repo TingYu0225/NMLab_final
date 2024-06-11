@@ -66,7 +66,7 @@ const SearchBar = () => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { search, setInputStatus, setKeyIn, keyIn, reset } = useNMLab();
+  const { search, setInputStatus, setKeyIn, keyIn, reset, saveFace, name } = useNMLab();
   const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -190,6 +190,7 @@ const SearchBar = () => {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
+          <Box fontSize={"22px"}>{saveFace == "trueLogin" ? name + ", 你好" : ""}</Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -197,7 +198,6 @@ const SearchBar = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <AccountCircle />

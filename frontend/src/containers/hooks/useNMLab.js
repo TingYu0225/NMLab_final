@@ -50,6 +50,7 @@ const NMLabProvider = (props) => {
   let waitTimer = useRef();
 
   const reset = () => {
+    navigate("/");
     setUrl("");
     setLogin(false);
     setSaveFace("false");
@@ -73,13 +74,14 @@ const NMLabProvider = (props) => {
         if (log.data.done) {
           setTakeFile(false);
           setFileUrl(log.data.file);
-          console.log(log.data);
-          navigate("/displayFile");
+          console.log(typeof log.data.file);
         }
       }, 1000);
     }
   }, [takeFile]);
-
+  useEffect(() => {
+    if (fileUrl != "") navigate("/displayFile");
+  }, [fileUrl]);
   const takephoto = (state) => {
     console.log("takephoto", state);
     if (state == "register") setSaveFace("processingRegister");
@@ -147,7 +149,7 @@ const NMLabProvider = (props) => {
         }
       }, 1000);
     } else if (faceStatus === "none") {
-      if (waitTimer.current) setSaveFace("true");
+      if (waitTimer.current) setSaveFace("trueLogin");
       clearInterval(waitTimer.current);
     }
   }, [faceStatus]);
@@ -225,6 +227,7 @@ const NMLabProvider = (props) => {
         takePhoto,
         fileName,
         takeFile,
+        fileUrl,
         reset,
         setTakePhoto,
         setUrl,

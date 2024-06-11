@@ -17,7 +17,7 @@ export default function LoginCard(props) {
   const navigate = useNavigate();
   const status = () => {
     switch (saveFace) {
-      case "true":
+      case "trueLogin":
         return (
           <Button variant="contained" endIcon={<DoneOutlineIcon />} disabled={true}>
             <Typography fontSize="30px" component="div">
@@ -78,19 +78,6 @@ export default function LoginCard(props) {
           登入以繼續使用
         </Typography>
       </Box>
-      {/* <TextField
-        id="filled-search"
-        variant="filled"
-        label="帳號"
-        type="Name"
-        onClick={() => {
-          click("name");
-        }}
-        sx={{ width: 300 }}
-        inputProps={{ style: { fontSize: 30 } }}
-        defaultValue={name}
-        value={name}
-      /> */}
 
       <Box
         sx={{ m: 3, mb: 0 }}
@@ -112,7 +99,7 @@ export default function LoginCard(props) {
         >
           <Button
             variant="outlined"
-            disabled={saveFace == "true" ? false : true}
+            disabled={saveFace == "trueLogin" ? false : true}
             sx={{ margin: 0, padding: 2, width: 300 }}
             onClick={() => {
               navigate("/filemenu");
