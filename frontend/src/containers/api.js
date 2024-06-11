@@ -12,6 +12,19 @@ class api {
   static waitProcess() {
     return getInfo(`/frontendcheckreg`).then((res) => res);
   }
+  static loginFace(url) {
+    var formData = new FormData();
+
+    formData.append("jpg", url);
+
+    return postImage(`/frontendrequestlog`, formData).then((res) => res);
+    // waiting: true => detect face success
+    // waiting: false => detect face error
+  }
+
+  static waitLoginProcess() {
+    return getInfo(`/frontendchecklog`).then((res) => res);
+  }
 }
 
 /**

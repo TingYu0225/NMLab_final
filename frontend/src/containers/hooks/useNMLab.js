@@ -39,6 +39,7 @@ const NMLabProvider = (props) => {
   const [reset, setReset] = useState(false);
   const [url, setUrl] = useState("");
   const [status, setStatus] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(false);
   let timer = useRef();
   let waitTimer = useRef();
   const takephoto = () => {
@@ -48,18 +49,31 @@ const NMLabProvider = (props) => {
   useEffect(() => {
     if (saveFace === "pending") {
       console.log(url);
-      console.log(api.uploadProfilePicture(name, url));
+      console.log(api.loginFace(url));
       setStatus(true);
     }
   }, [saveFace]);
+  // useEffect(() => {
+  //   if (status) {
+  //     waitTimer.current = setInterval(async () => {
+  //       let log = await api.waitProcess();
+  //       console.log("log", log.data.done);
+  //       if (log.data.done) setStatus(false);
+  //     }, 1000);
+  //   } else if (!status) {
+  //     if (waitTimer.current) setSaveFace("true");
+  //     clearInterval(waitTimer.current);
+  //   }
+  // }, [status]);
   useEffect(() => {
     if (status) {
       waitTimer.current = setInterval(async () => {
-        let log = await api.waitProcess();
+        let log = await api.waitLoginProcess();
         console.log("log", log.data.done);
         if (log.data.done) setStatus(false);
       }, 1000);
     } else if (!status) {
+      if (waitTimer.current) setSaveFace("true");
       clearInterval(waitTimer.current);
     }
   }, [status]);
@@ -68,12 +82,14 @@ const NMLabProvider = (props) => {
     setSaveFace("pending");
     navigate("/register");
   };
+
   useEffect(() => {
     client.open("POST", "http://localhost:5500/set_mode", true);
     client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (keyIn) client.send("mode=keyboard");
     else client.send("mode=normal");
   }, [keyIn]);
+
   useEffect(() => {
     console.log("hi saveFace", saveFace);
     setCountDown(5);
@@ -86,6 +102,7 @@ const NMLabProvider = (props) => {
       }, 1000);
     }
   }, [saveFace]);
+
   useEffect(() => {
     if (countDown <= 0) clearInterval(timer.current);
   }, [countDown]);
