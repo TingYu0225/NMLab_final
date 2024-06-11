@@ -55,14 +55,13 @@ export default function Register() {
         justifyContent="center"
         flexWrap="wrap"
         fontSize="80px"
+        fontWeight={"bold"}
       >
-        Sign
-        <br />
-        Up
+        立即註冊
       </Box>
       <Box
         display="flex"
-        height="89vh"
+        height="93vh"
         width={"65%"}
         alignItems="center"
         bgcolor="#becbd3"
