@@ -18,10 +18,7 @@ const Wrapper = styled.div`
 // background-color: #becbd3;
 export default function Register() {
   const { name, setName, keyIn, setKeyIn, inputStatus, setInputStatus } = useNMLab();
-  const [password, setPassword] = React.useState("");
-  const [phone_number, setPhoneNumber] = React.useState("");
   const test = () => {
-    console.log(name); //50, 90, 130
     window.scrollTo({ top: 50, left: 0, behavior: "smooth" });
   };
   useEffect(() => {
@@ -30,18 +27,11 @@ export default function Register() {
       case "name":
         pos = 80;
         break;
-      case "password":
-        pos = 120;
-        break;
-      case "phone_number":
-        pos = 160;
-        break;
     }
 
     window.scrollTo({ top: pos, left: 0, behavior: "smooth" });
   }, [keyIn]);
   const click = (ss) => {
-    console.log(ss);
     setInputStatus(ss);
     setKeyIn(true);
   };

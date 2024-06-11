@@ -21,7 +21,6 @@ export default function Register() {
   const [password, setPassword] = React.useState("");
   const [phone_number, setPhoneNumber] = React.useState("");
   const test = () => {
-    console.log(name); //50, 90, 130
     window.scrollTo({ top: 50, left: 0, behavior: "smooth" });
   };
   useEffect(() => {
@@ -41,7 +40,6 @@ export default function Register() {
     window.scrollTo({ top: pos, left: 0, behavior: "smooth" });
   }, [keyIn]);
   const click = (ss) => {
-    console.log(ss);
     setInputStatus(ss);
     setKeyIn(true);
   };

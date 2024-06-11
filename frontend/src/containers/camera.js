@@ -14,8 +14,17 @@ const videoConstraints = {
 
 const Camera = () => {
   const webcamRef = useRef(null);
-  const [status, setStatus] = React.useState(false);
-  const { saveFace, setSaveFace, sendphoto, countDown, setUrl, url } = useNMLab();
+
+  const {
+    saveFace,
+    setSaveFace,
+    sendphoto,
+    countDown,
+    setUrl,
+    url,
+    takePhoto,
+    setTakePhoto,
+  } = useNMLab();
 
   useEffect(() => {
     if (countDown == 0) {
@@ -30,7 +39,7 @@ const Camera = () => {
     //https://stackoverflow.com/questions/58806971/how-can-i-take-a-picture-in-react-web-application-not-native
     const imageSrc = webcamRef.current.getScreenshot();
     setUrl(imageSrc);
-    setStatus(true);
+    setTakePhoto(false);
   }, [webcamRef]);
 
   const onUserMedia = (e) => {
@@ -46,7 +55,7 @@ const Camera = () => {
       justifyContent="center"
       flexWrap="wrap"
     >
-      {!status ? (
+      {takePhoto ? (
         <>
           <Box width={"72%"} display="flex" justifyContent="center">
             <Webcam
@@ -101,8 +110,7 @@ const Camera = () => {
                   variant="contained"
                   style={{ fontSize: "25px", borderRadius: "10px", marginLeft: "20px" }}
                   onClick={() => {
-                    setSaveFace("retry");
-                    setStatus(false);
+                    setTakePhoto(true);
                   }}
                   endIcon={<ReplayIcon />}
                 >

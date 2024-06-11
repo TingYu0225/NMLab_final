@@ -66,7 +66,7 @@ const SearchBar = () => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { search, setInputStatus, setKeyIn, keyIn } = useNMLab();
+  const { search, setInputStatus, setKeyIn, keyIn, reset } = useNMLab();
   const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -131,8 +131,6 @@ const SearchBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
-      
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -159,8 +157,8 @@ const SearchBar = () => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={() => {
-              console.log("hi");
               navigate("/");
+              reset();
               return;
             }}
           >
@@ -175,6 +173,7 @@ const SearchBar = () => {
               // will rerender the whole web page
               // window.location.href = "/";
               navigate("/");
+              reset();
             }}
           >
             K-GESTURE
@@ -192,7 +191,6 @@ const SearchBar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            
             <IconButton
               size="large"
               edge="end"

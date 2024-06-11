@@ -1,29 +1,42 @@
 import axios from "axios";
 class api {
-  static uploadProfilePicture(name, url) {
+  static async registerFace(name, url) {
     var formData = new FormData();
-
     formData.append("username", name);
     formData.append("jpg", url);
-
-    return postImage(`/frontendrequestreg`, formData).then((res) => res);
+    return await postImage(`/frontendrequestreg`, formData).then((res) => res);
   }
 
   static waitProcess() {
     return getInfo(`/frontendcheckreg`).then((res) => res);
   }
-  static loginFace(url) {
+
+  static async loginFace(url) {
     var formData = new FormData();
-
     formData.append("jpg", url);
-
-    return postImage(`/frontendrequestlog`, formData).then((res) => res);
+    let log = await postImage(`/frontendrequestlog`, formData).then((res) => res);
+    return log;
     // waiting: true => detect face success
     // waiting: false => detect face error
   }
 
   static waitLoginProcess() {
     return getInfo(`/frontendchecklog`).then((res) => res);
+  }
+  // req: jpg:face image, pdf: filename
+  // res: waiting:true
+  // post
+  static askPDF(url, fileName) {
+    var formData = new FormData();
+    formData.append("jpg", url);
+    formData.append("pdf", fileName);
+    return postImage(`/pdfrequest`, formData).then((res) => res);
+  }
+
+  // get
+  // done:true, access:true(you are the author), file:file base64 url
+  static getPDF() {
+    return getInfo(`/pdfrequest`).then((res) => res);
   }
 }
 
@@ -72,7 +85,6 @@ let getInfo = (endpoint) => {
   return axios
     .get(url, customHeader)
     .then((res) => {
-      console.log(res.data); // This logs the response to the console
       return {
         status: res.status,
         data: res.data,
