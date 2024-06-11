@@ -16,7 +16,10 @@ from Crypto.Hash import SHA256
 import binascii
 import face_recognition
 import numpy as np
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from io import BytesIO
+from PIL import Image
+
 
 
 app = Flask(__name__)
@@ -160,10 +163,12 @@ def rpirequestreg():
 @app.route('/frontendrequestreg',methods=['POST'])
 def frontendrequestreg():
     if request.method == 'POST':
-        print("2")
-        data = request.json
-        print(data)
-        username = data['username']
+        #data = request.json
+        username = request.form.get('username')
+        image_string = request.form.get('jpg')
+        decoded_string=base64.b64decode(image_string)
+        reg_image=Image.open(BytesIO(decoded_string))
+
        
         #reg_image = face_recognition.load_image_file("dragon.jpg") #input image
         #reg_face_encoding = face_recognition.face_encodings(reg_image)[0]
@@ -176,6 +181,7 @@ def frontendrequestreg():
         return jsonify({'status': 'success', 'waiting': True})
     
 @app.route('/frontendcheckreg', methods=['GET', 'POST'])
+@cross_origin()
 def frontendcheckreg():
     if request.method == 'GET':
         global registerDone
@@ -238,4 +244,4 @@ def user_upload():
     return "ok"
 
 if __name__ == '__main__':
-    app.run(host='0,0,0,0', port=8080)
+    app.run(host='172.20.10.3', port=8080)

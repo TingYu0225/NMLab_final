@@ -48,18 +48,19 @@ def register(username):
     else:
         print("Registration Failed!", data["message"])
 
+
 def login(username):
     # Step 1: Send a GET request with the username
-    response = requests.get(f"{server_url}/login", params={"username": username})
+    response = requests.get(f"{server_url}/pdfverify", params={"username": username})
     data = response.json()
+    print(username)
 
     if data["status"] == "error":
         print(data["message"])
         return
 
     challenge = data["challenge"]
-    credential_id = data["credential_id"]
-    print(data)
+    credential_id = "HS/SRK/"+username
 
     # Step 2: Sign the challenge using the given key by credential_id.
     digest=hash_before_sign(challenge)
@@ -71,26 +72,27 @@ def login(username):
         "signature": encoder(signature),
     }
 
-    response = requests.post(f"{server_url}/login", json=post_data)
+    response = requests.post(f"{server_url}/pdfverify", json=post_data)
     data = response.json()
 
     if data["status"] == "success":
-        print("Login Success!", data["flag"])
+        print("Success!")
     else:
-        print("Login Failed!", data["message"])
+        print("Access deny")
 
 if __name__ == "__main__":
-    username = "r11921a39"
-    #register(username)
-    #login(username)
-    #response = requests.get(f"{server_url}/frontendrequestreg", params={"username": username,})
-    #data = response.json()
-    #print(data["waiting"])
+
     while(True):
         response = requests.get(f"{server_url}/rpirequestreg", params={})
         data2 = response.json()
-        #print(data2["pending"])
+    	#print(data2["pending"])
         if data2["pending"]:
             register(data2["name"])
         time.sleep(1)
+
+        response = requests.get(f"{server_url}/rpirequestpdf", params={})
+        data2 = response.json()
+        ##print(data2["pending"])
+        if data2["pending"]:
+            login(data2["name"])
 
