@@ -15,9 +15,7 @@ export default function InfoCard(props) {
     useNMLab();
 
   const textFieldRef = React.useRef(null);
-  React.useEffect(() => {
-    textFieldRef.current.focus();
-  }, []);
+
   console.log("info", saveFace);
   const status = () => {
     switch (saveFace) {
@@ -25,13 +23,19 @@ export default function InfoCard(props) {
         return (
           <Button variant="contained" endIcon={<DoneOutlineIcon />} disabled={true}>
             <Typography fontSize="30px" component="div">
-            掃描完成
+              掃描完成
             </Typography>
           </Button>
         );
       case "false":
         return (
-          <Button variant="contained"  sx={{margin:2, padding:2 ,width:300}} endIcon={<CameraAltIcon />} onClick={takephoto}>
+          <Button
+            variant="contained"
+            sx={{ margin: 2, padding: 2, width: 300 }}
+            endIcon={<CameraAltIcon />}
+            onClick={takephoto}
+            disabled={name == "" ? true : false}
+          >
             <Typography fontSize="25px" component="div">
               掃描臉部
             </Typography>
@@ -39,7 +43,12 @@ export default function InfoCard(props) {
         );
       case "pending":
         return (
-          <LoadingButton loading sx={{margin:2, padding:2 ,width:300}} variant="outlined" endIcon={<CameraAltIcon />}>
+          <LoadingButton
+            loading
+            sx={{ margin: 2, padding: 2, width: 300 }}
+            variant="outlined"
+            endIcon={<CameraAltIcon />}
+          >
             <Typography fontSize="25px" component="div">
               掃描臉部
             </Typography>
@@ -47,7 +56,11 @@ export default function InfoCard(props) {
         );
       default:
         return (
-          <Button variant="contained" sx={{margin:2, padding:2 ,width:300}}endIcon={<CameraAltIcon />}>
+          <Button
+            variant="contained"
+            sx={{ margin: 2, padding: 2, width: 300 }}
+            endIcon={<CameraAltIcon />}
+          >
             <Typography fontSize="25px" component="div">
               掃描完成
             </Typography>
@@ -56,9 +69,9 @@ export default function InfoCard(props) {
     }
   }; //autofocus={keyIn ? "true" : "false"}
   return (
-    <Card sx={{ height: 550, width:500 }}>
+    <Card sx={{ height: 550, width: 500 }}>
       <Box
-        sx={{ height: 100, m: 5, mb:3}}
+        sx={{ height: 100, m: 5, mb: 3 }}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -76,11 +89,10 @@ export default function InfoCard(props) {
         onClick={() => {
           click("name");
         }}
-        sx={{width:300,}}
-        inputProps={{style:{fontSize:30}}}
+        sx={{ width: 300 }}
+        inputProps={{ style: { fontSize: 30 } }}
         defaultValue={name}
         value={name}
-        inputRef={textFieldRef}
       />
 
       <Box
@@ -119,7 +131,7 @@ export default function InfoCard(props) {
           <Button
             variant="outlined"
             disabled={saveFace == "true" ? (name != "" ? false : true) : true}
-            sx={{margin:0, padding:2 ,width:300}}
+            sx={{ margin: 0, padding: 2, width: 300 }}
           >
             <Typography fontSize="25px" component="div">
               註冊

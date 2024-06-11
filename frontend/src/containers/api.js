@@ -1,12 +1,16 @@
 import axios from "axios";
 class api {
-  static uploadProfilePicture() {
+  static uploadProfilePicture(name, url) {
     var formData = new FormData();
 
-    formData.append("image", "1222");
-    formData.append("from", "frontend");
+    formData.append("username", name);
+    formData.append("jpg", url);
 
-    return postImage(`/user/upload`, formData).then((res) => res);
+    return postImage(`/frontendrequestreg`, formData).then((res) => res);
+  }
+
+  static waitProcess() {
+    return getInfo(`/frontendcheckreg`).then((res) => res);
   }
 }
 
@@ -24,14 +28,16 @@ let postImage = (endpoint, formData) => {
     },
   };
 
-  let url = `http://172.20.10.3:5000`;
+  let url = `http://172.20.10.3:8080${endpoint}`;
   return axios
     .post(url, formData, customHeader)
-    .then((res) => ({
-      status: res.status,
-      data: res.data,
-      error: null,
-    }))
+    .then((res) => {
+      return {
+        status: res.status,
+        data: res.data,
+        error: null,
+      };
+    })
     .catch((err) => {
       return {
         status: err.response ? err.response.status : 0,
@@ -40,3 +46,33 @@ let postImage = (endpoint, formData) => {
       };
     });
 };
+
+let getInfo = (endpoint) => {
+  const customHeader = {
+    headers: {
+      // Authorization: `Bearer ${getLocalStorageToken()}`,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  let url = `http://172.20.10.3:8080${endpoint}`;
+  return axios
+    .get(url, customHeader)
+    .then((res) => {
+      console.log(res.data); // This logs the response to the console
+      return {
+        status: res.status,
+        data: res.data,
+        error: null,
+      };
+    })
+    .catch((err) => {
+      return {
+        status: err.response ? err.response.status : 0,
+        data: {},
+        error: err.message,
+      };
+    });
+};
+
+export { api };

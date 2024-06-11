@@ -14,9 +14,8 @@ const videoConstraints = {
 
 const Camera = () => {
   const webcamRef = useRef(null);
-  const [url, setUrl] = React.useState(null);
   const [status, setStatus] = React.useState(false);
-  const { saveFace, setSaveFace, sendphoto, countDown } = useNMLab();
+  const { saveFace, setSaveFace, sendphoto, countDown, setUrl, url } = useNMLab();
 
   useEffect(() => {
     if (countDown == 0) {
@@ -31,7 +30,6 @@ const Camera = () => {
     //https://stackoverflow.com/questions/58806971/how-can-i-take-a-picture-in-react-web-application-not-native
     const imageSrc = webcamRef.current.getScreenshot();
     setUrl(imageSrc);
-    console.log(imageSrc);
     setStatus(true);
   }, [webcamRef]);
 
@@ -54,8 +52,7 @@ const Camera = () => {
             <Webcam
               ref={webcamRef}
               audio={false}
-              screenshotFormat="jpeg"
-              mirrored={true}
+              screenshotFormat="image/jpeg"
               videoConstraints={videoConstraints}
               onUserMedia={onUserMedia}
               style={{ borderRadius: "40px" }}
@@ -71,7 +68,7 @@ const Camera = () => {
         url && (
           <>
             <Box width={"68%"}>
-              <img src={url} alt="Screenshot" style={{ borderRadius: "40px" }}/>
+              <img src={url} alt="Screenshot" style={{ borderRadius: "40px" }} />
             </Box>
             <Box
               width={"32%"}
