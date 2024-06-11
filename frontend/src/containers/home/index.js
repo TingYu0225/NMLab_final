@@ -59,7 +59,6 @@ export default function Home(props) {
   const { login, setLogin } = useNMLab();
   const navigate = useNavigate();
   const selectCard = (title) => {
-    console.log(title);
     if (title === "註冊帳號") navigate("/register");
     else if (title === "列印／掃描") navigate("/printMenu");
   };

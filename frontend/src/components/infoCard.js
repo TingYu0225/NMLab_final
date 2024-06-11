@@ -9,13 +9,11 @@ import { Box } from "@mui/joy";
 import { useNMLab } from "../containers/hooks/useNMLab";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useNavigate } from "react-router-dom";
 export default function InfoCard(props) {
-  const { test, setName, click } = props;
-  const { keyIn, setKeyIn, phone_number, name, password, saveFace, takephoto } =
-    useNMLab();
-
-
-  console.log("info", saveFace);
+  const { click } = props;
+  const { name, saveFace, takephoto, reset } = useNMLab();
+  const navigate = useNavigate();
   const status = () => {
     switch (saveFace) {
       case "true":
@@ -32,7 +30,7 @@ export default function InfoCard(props) {
             variant="contained"
             sx={{ margin: 2, padding: 2, width: 300 }}
             endIcon={<CameraAltIcon />}
-            onClick={takephoto}
+            onClick={() => takephoto("register")}
             disabled={name == "" ? true : false}
           >
             <Typography fontSize="25px" component="div">
@@ -40,7 +38,7 @@ export default function InfoCard(props) {
             </Typography>
           </Button>
         );
-      case "pending":
+      case "pendingRegister":
         return (
           <LoadingButton
             loading
@@ -103,22 +101,7 @@ export default function InfoCard(props) {
       >
         {status()}
       </Box>
-      {/* <TextField
-        id="standard-password-input"
-        label="Password"
-        type="pass"
-        variant="standard"
-        onClick={() => click("password")}
-        value={password}
-      /> 
-      <TextField
-        id="standard-phone_number-input"
-        label="Phone number"
-        type="Phone number"
-        variant="standard"
-        onClick={() => click("phone_number")}
-        value={phone_number}
-      />*/}
+
       <CardContent>
         <Box
           sx={{ height: 90, mb: 2, mt: 0 }}
@@ -131,6 +114,10 @@ export default function InfoCard(props) {
             variant="outlined"
             disabled={saveFace == "true" ? (name != "" ? false : true) : true}
             sx={{ margin: 0, padding: 2, width: 300 }}
+            onClick={() => {
+              reset();
+              navigate("/");
+            }}
           >
             <Typography fontSize="25px" component="div">
               註冊

@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -10,16 +9,15 @@ import { Box } from "@mui/joy";
 import { useNMLab } from "../containers/hooks/useNMLab";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useNavigate } from "react-router";
 export default function LoginCard(props) {
   const { test, setName, click } = props;
   const { keyIn, setKeyIn, phone_number, name, password, saveFace, takephoto } =
     useNMLab();
-
-
-  console.log("info", saveFace);
+  const navigate = useNavigate();
   const status = () => {
     switch (saveFace) {
-      case "true":
+      case "trueLogin":
         return (
           <Button variant="contained" endIcon={<DoneOutlineIcon />} disabled={true}>
             <Typography fontSize="30px" component="div">
@@ -33,14 +31,14 @@ export default function LoginCard(props) {
             variant="contained"
             sx={{ margin: 2, padding: 2, width: 300 }}
             endIcon={<CameraAltIcon />}
-            onClick={takephoto}
+            onClick={() => takephoto("login")}
           >
             <Typography fontSize="25px" component="div">
               掃描臉部
             </Typography>
           </Button>
         );
-      case "pending":
+      case "pendingLogin":
         return (
           <LoadingButton
             loading
@@ -61,7 +59,7 @@ export default function LoginCard(props) {
             endIcon={<CameraAltIcon />}
           >
             <Typography fontSize="25px" component="div">
-              掃描完成
+              error
             </Typography>
           </Button>
         );
@@ -80,19 +78,6 @@ export default function LoginCard(props) {
           登入以繼續使用
         </Typography>
       </Box>
-      {/* <TextField
-        id="filled-search"
-        variant="filled"
-        label="帳號"
-        type="Name"
-        onClick={() => {
-          click("name");
-        }}
-        sx={{ width: 300 }}
-        inputProps={{ style: { fontSize: 30 } }}
-        defaultValue={name}
-        value={name}
-      /> */}
 
       <Box
         sx={{ m: 3, mb: 0 }}
@@ -103,22 +88,7 @@ export default function LoginCard(props) {
       >
         {status()}
       </Box>
-      {/* <TextField
-        id="standard-password-input"
-        label="Password"
-        type="pass"
-        variant="standard"
-        onClick={() => click("password")}
-        value={password}
-      /> 
-      <TextField
-        id="standard-phone_number-input"
-        label="Phone number"
-        type="Phone number"
-        variant="standard"
-        onClick={() => click("phone_number")}
-        value={phone_number}
-      />*/}
+
       <CardContent>
         <Box
           sx={{ height: 90, mb: 2, mt: 0 }}
@@ -129,8 +99,11 @@ export default function LoginCard(props) {
         >
           <Button
             variant="outlined"
-            disabled={saveFace == "true" ? (name != "" ? false : true) : true}
+            disabled={saveFace == "trueLogin" ? false : true}
             sx={{ margin: 0, padding: 2, width: 300 }}
+            onClick={() => {
+              navigate("/filemenu");
+            }}
           >
             <Typography fontSize="25px" component="div">
               登入
@@ -138,7 +111,9 @@ export default function LoginCard(props) {
           </Button>
         </Box>
         <Typography variant="body2" color="text.secondary">
-          您的帳號活動將被收集以改善客戶體驗，<br/>請見<u>隱私權條款</u>。
+          您的帳號活動將被收集以改善客戶體驗，
+          <br />
+          請見<u>隱私權條款</u>。
         </Typography>
       </CardContent>
     </Card>

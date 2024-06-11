@@ -12,7 +12,7 @@ const NMLabContext = createContext({
   num: 0,
   keyIn: false,
   input: "",
-  reset: false,
+  reset: () => {},
   inputStatus: "",
   phone_number: "",
   password: "",
@@ -20,6 +20,10 @@ const NMLabContext = createContext({
   saveFace: "false",
   countDown: 0,
   url: "",
+  fileName: {},
+  takePhoto: false,
+  fileUrl: "",
+  chooseFile: () => {},
   takephoto: () => {},
   sendphoto: () => {},
 });
@@ -36,73 +40,126 @@ const NMLabProvider = (props) => {
   const [saveFace, setSaveFace] = useState("false");
   const [countDown, setCountDown] = useState(5);
   const navigate = useNavigate();
-  const [reset, setReset] = useState(false);
   const [url, setUrl] = useState("");
-  const [status, setStatus] = useState(false);
+  const [takeFile, setTakeFile] = useState(false);
+  const [fileUrl, setFileUrl] = useState("");
+  const [faceStatus, setFaceStatus] = useState("none");
+  const [takePhoto, setTakePhoto] = useState(false);
+  const [fileName, setFileName] = useState([]);
   let timer = useRef();
   let waitTimer = useRef();
-  const takephoto = () => {
-    setSaveFace("processing");
-    navigate("/camera");
+
+  const reset = () => {
+    navigate("/");
+    setUrl("");
+    setLogin(false);
+    setSaveFace("false");
+    setSearch("");
+    setInputStatus("");
+    setInput("");
+    setName("");
+    setNum(0);
+    setKeyIn(false);
+    setTakePhoto(false);
+  };
+  const chooseFile = (filename) => {
+    console.log("chooseFile", filename);
+    api.askPDF(url, filename);
+    setTakeFile(true);
   };
   useEffect(() => {
-    if (saveFace === "pending") {
-      console.log(url);
-      console.log(api.uploadProfilePicture(name, url));
-      setStatus(true);
+    if (takeFile) {
+      waitTimer.current = setInterval(async () => {
+        let log = await api.getPDF();
+        if (log.data.done) {
+          setTakeFile(false);
+          setFileUrl(log.data.file);
+          console.log(typeof log.data.file);
+        }
+      }, 1000);
+    }
+  }, [takeFile]);
+  useEffect(() => {
+    if (fileUrl != "") navigate("/displayFile");
+  }, [fileUrl]);
+  const takephoto = (state) => {
+    console.log("takephoto", state);
+    if (state == "register") setSaveFace("processingRegister");
+    else if (state == "login") setSaveFace("processingLogin");
+    navigate("/camera");
+    setTakePhoto(true);
+  };
+
+  const sendphoto = () => {
+    console.log("sendphoto", saveFace);
+    if (saveFace == "processingRegister") {
+      setSaveFace("pendingRegister");
+      navigate("/register");
+    } else {
+      setSaveFace("pendingLogin");
+      navigate("/login");
+    }
+  };
+  // login send photo to backend
+  const tryLogin = async () => {
+    let log = await api.loginFace(url);
+    if (log.data.waiting) {
+      setFaceStatus("login");
+      setName(log.data.username);
+      console.log(log.data.username);
+    } else setSaveFace("false");
+  };
+  useEffect(() => {
+    if (saveFace === "pendingRegister") {
+      console.log(api.registerFace(name, url));
+      setSaveFace("true");
+    }
+    if (saveFace === "pendingLogin") {
+      tryLogin();
     }
   }, [saveFace]);
+  //countdown for taking photo
   useEffect(() => {
-    if (status) {
-      waitTimer.current = setInterval(async () => {
-        let log = await api.waitProcess();
-        console.log("log", log.data.done);
-        if (log.data.done) setStatus(false);
+    if (takePhoto) {
+      timer.current = setInterval(() => {
+        setCountDown((prevCount) => {
+          return prevCount - 1;
+        });
       }, 1000);
-    } else if (!status) {
+    }
+  }, [takePhoto]);
+  //reset countdown for taking photo
+  useEffect(() => {
+    if (countDown <= 0) {
+      clearInterval(timer.current);
+      setCountDown(5);
+      setTakePhoto(false);
+    }
+  }, [countDown]);
+
+  useEffect(() => {
+    if (faceStatus === "login") {
+      waitTimer.current = setInterval(async () => {
+        let log = await api.waitLoginProcess();
+
+        if (log.data.done) {
+          setFaceStatus("none");
+          setFileName(log.data.filenames);
+          console.log(log.data.filenames);
+        }
+      }, 1000);
+    } else if (faceStatus === "none") {
+      if (waitTimer.current) setSaveFace("trueLogin");
       clearInterval(waitTimer.current);
     }
-  }, [status]);
+  }, [faceStatus]);
 
-  const sendphoto = ({ url }) => {
-    setSaveFace("pending");
-    navigate("/register");
-  };
   useEffect(() => {
     client.open("POST", "http://localhost:5500/set_mode", true);
     client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (keyIn) client.send("mode=keyboard");
     else client.send("mode=normal");
   }, [keyIn]);
-  useEffect(() => {
-    console.log("hi saveFace", saveFace);
-    setCountDown(5);
-    if (saveFace === "processing" || saveFace === "retry") {
-      timer.current = setInterval(() => {
-        console.log("hi count", countDown);
-        setCountDown((prevCount) => {
-          return prevCount - 1;
-        });
-      }, 1000);
-    }
-  }, [saveFace]);
-  useEffect(() => {
-    if (countDown <= 0) clearInterval(timer.current);
-  }, [countDown]);
-
-  useEffect(() => {
-    if (reset) {
-      setReset(false);
-      setLogin(false);
-      setSaveFace("false");
-      setSearch("");
-      setInputStatus("");
-      setInput("");
-      setName("");
-      setNum(0);
-      setKeyIn(false);
-    }
-  }, [reset]);
 
   // init input
   useEffect(() => {
@@ -113,7 +170,6 @@ const NMLabProvider = (props) => {
     if (keyIn) {
       switch (inputStatus) {
         case "name":
-          console.log("name:", name);
           if (name.length > 0) setInput(name);
           else setInput("");
           break;
@@ -141,7 +197,6 @@ const NMLabProvider = (props) => {
           setName(input);
           break;
         case "password":
-          console.log("password:", input);
           setPassword(input);
           break;
         case "phone_number":
@@ -169,6 +224,12 @@ const NMLabProvider = (props) => {
         saveFace,
         countDown,
         url,
+        takePhoto,
+        fileName,
+        takeFile,
+        fileUrl,
+        reset,
+        setTakePhoto,
         setUrl,
         sendphoto,
         takephoto,
@@ -180,7 +241,7 @@ const NMLabProvider = (props) => {
         setName,
         setNum,
         setKeyIn,
-        setReset,
+        chooseFile,
       }}
       {...props}
     />
