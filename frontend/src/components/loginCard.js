@@ -77,7 +77,7 @@ export default function LoginCard(props) {
         flexWrap="wrap"
       >
         <Typography fontSize="38px" component="div">
-          通行所有服務
+          登入以繼續使用
         </Typography>
       </Box>
       {/* <TextField

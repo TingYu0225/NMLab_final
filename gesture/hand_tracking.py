@@ -189,6 +189,36 @@ while cap.isOpened():
             elif label == 'Left':
                 # TODO: prevent clicking when scrolling
                 # detect pinch
+                # arr = lm_to_np(lm, is_left=True)
+
+                # after_tf = align_points(arr[0], arr[5], arr[17], arr)
+                # after_tf = remove_reference_points(after_tf)
+                # after_tf_flat = np.reshape(after_tf, (1, 57))
+                
+                # predictions = number_model.predict(after_tf_flat)
+                # predicted_class = number_ges_dict[np.argmax(predictions, axis=1)[0]]
+
+                # # update history
+                # lm_arr_histoty.append(after_tf)
+
+                # left_pinch = False
+
+                # if len(lm_arr_histoty) == 5:
+                #     lm_arr_histoty.pop(0)
+
+                # if len(lm_arr_histoty) == 4:
+                #     # double check
+                #     old_dist = np.linalg.norm(lm_arr_histoty[0][3] - lm_arr_histoty[0][6])
+                #     new_dist = np.linalg.norm(lm_arr_histoty[3][3] - lm_arr_histoty[3][6])
+
+                #     # print(new_dist)
+                #     if old_dist - new_dist > 0.2:
+                #         left_pinch = True
+                #         print("True")
+                #     else:
+                #         left_pinch = False
+                #         print("False")
+
                 arr = lm_to_np(lm, is_left=True)
 
                 dist = np.linalg.norm(arr[5] - arr[0])

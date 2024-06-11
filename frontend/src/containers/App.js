@@ -10,6 +10,7 @@ import Register from "./register";
 import { useNMLab } from "./hooks/useNMLab";
 import DisplayKB from "./displayKB";
 import Camera from "./camera";
+import PrintMenu from "./printMenu"
 
 //https://docs.expo.dev/ui-programming/z-index/
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/camera" element={<Camera />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/printMenu" element={<PrintMenu />} />
         </Route>
       </Routes>
     </div>

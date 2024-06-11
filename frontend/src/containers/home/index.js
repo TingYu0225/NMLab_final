@@ -33,7 +33,7 @@ const description = [
   "K-POINT、銀行",
   "電影票、火車票",
   "門市預購、交貨便",
-  "雲端列印、文件列印",
+  "雲端列印、檔案列印",
 ];
 
 const description2 = [
@@ -42,7 +42,7 @@ const description2 = [
   "證券保險、高鐵",
   "飯店、機票、租車",
   "把你啊罵賣掉、網購、快遞",
-  "圖片列印、4x6相片列印",
+  "影印、掃描、傳真",
 ];
 
 const adTitle = ["JavaScript 從入門到入土", "即刻註冊 K-ANIME", "我們值得信任的理由"];
@@ -61,10 +61,10 @@ export default function Home(props) {
   const selectCard = (title) => {
     console.log(title);
     if (title === "註冊帳號") navigate("/register");
-    else if (title === "列印／掃描") navigate("/login");
+    else if (title === "列印／掃描") navigate("/printMenu");
   };
   return (
-    <Box display="flex">
+    <Box display="flex" gap={3}>
       <Wrapper>
         {title.map((t, i) => (
           <Box width="50%" height="30%">
