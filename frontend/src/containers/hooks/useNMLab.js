@@ -1,6 +1,7 @@
 import { useContext, createContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
-
+import axios from "axios";
+import { apiClient } from "../api";
 var XMLHttpRequest = require("xhr2");
 
 var client = new XMLHttpRequest();
@@ -40,6 +41,9 @@ const NMLabProvider = (props) => {
     setSaveFace("processing");
     navigate("/camera");
   };
+  useEffect(() => {
+    apiClient.uploadProfilePicture();
+  }, [keyIn]);
   const sendphoto = ({ url }) => {
     setSaveFace("pending");
     console.log("hi setSaveFace");
