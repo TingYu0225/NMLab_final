@@ -55,6 +55,7 @@ const Camera = () => {
               ref={webcamRef}
               audio={false}
               screenshotFormat="jpeg"
+              mirrored={true}
               videoConstraints={videoConstraints}
               onUserMedia={onUserMedia}
               style={{ borderRadius: "40px" }}
