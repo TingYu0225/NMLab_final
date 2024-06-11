@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import AdCard from "../components/funcCard";
-import InfoCard from "../components/infoCard";
+import LoginCard from "../components/loginCard";
 import { useNMLab, NMLabProvider } from "./hooks/useNMLab";
 
 const Wrapper = styled.div`
@@ -56,7 +56,7 @@ export default function Register() {
         justifyContent="center"
         flexWrap="wrap"
       >
-        <InfoCard test={test} setName={setName} click={click} />
+        <LoginCard test={test} setName={setName} click={click} />
       </Box>
       <Box
         display="flex"
