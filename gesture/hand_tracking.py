@@ -97,6 +97,8 @@ while cap.isOpened():
                     else:
                         is_dragging = True
                         start_x_coord = lm.landmark[8].x
+                        pyautogui.moveTo(2180 / 2, 670 / 2, _pause=False) # only works on my computer
+                        pyautogui.click(_pause=False)
                         cursor_pos = 0
 
                 # detect number of fingers
