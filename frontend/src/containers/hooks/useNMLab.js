@@ -1,6 +1,7 @@
 import { useContext, createContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
-
+import axios from "axios";
+import { api } from "../api";
 var XMLHttpRequest = require("xhr2");
 
 var client = new XMLHttpRequest();
@@ -18,6 +19,7 @@ const NMLabContext = createContext({
   search: "",
   saveFace: "false",
   countDown: 0,
+  url: "",
   takephoto: () => {},
   sendphoto: () => {},
 });
@@ -35,14 +37,35 @@ const NMLabProvider = (props) => {
   const [countDown, setCountDown] = useState(5);
   const navigate = useNavigate();
   const [reset, setReset] = useState(false);
+  const [url, setUrl] = useState("");
+  const [status, setStatus] = useState(false);
   let timer = useRef();
+  let waitTimer = useRef();
   const takephoto = () => {
     setSaveFace("processing");
     navigate("/camera");
   };
+  useEffect(() => {
+    if (saveFace === "pending") {
+      console.log(url);
+      console.log(api.uploadProfilePicture(name, url));
+      setStatus(true);
+    }
+  }, [saveFace]);
+  useEffect(() => {
+    if (status) {
+      waitTimer.current = setInterval(async () => {
+        let log = await api.waitProcess();
+        console.log("log", log.data.done);
+        if (log.data.done) setStatus(false);
+      }, 1000);
+    } else if (!status) {
+      clearInterval(waitTimer.current);
+    }
+  }, [status]);
+
   const sendphoto = ({ url }) => {
     setSaveFace("pending");
-    console.log("hi setSaveFace");
     navigate("/register");
   };
   useEffect(() => {
@@ -145,6 +168,8 @@ const NMLabProvider = (props) => {
         search,
         saveFace,
         countDown,
+        url,
+        setUrl,
         sendphoto,
         takephoto,
         setSaveFace,

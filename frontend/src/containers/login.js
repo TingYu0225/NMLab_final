@@ -49,18 +49,6 @@ export default function Register() {
     <Wrapper>
       <Box
         display="flex"
-        height="89vh"
-        width={"35%"}
-        alignItems="center"
-        justifyContent="center"
-        flexWrap="wrap"
-        fontSize="80px"
-        fontWeight={"bold"}
-      >
-        立即註冊
-      </Box>
-      <Box
-        display="flex"
         height="93vh"
         width={"65%"}
         alignItems="center"
@@ -70,6 +58,19 @@ export default function Register() {
       >
         <InfoCard test={test} setName={setName} click={click} />
       </Box>
+      <Box
+        display="flex"
+        height="89vh"
+        width={"35%"}
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+        fontSize="80px"
+        fontWeight={"bold"}
+      >
+        歡迎回來
+      </Box>
+
       {keyIn ? (
         <Box height="40vh" width="100%">
           hi
