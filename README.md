@@ -4,6 +4,15 @@ This is a final project of NM Lab. In this project we create K-GESTURE, a system
 
 To try this system, please follow the steps below to run the independent service in each folder.
 
+For backend:
+
+(1)
+maybe you should modify "c" to capital "C" after you install Crypto
+
+(2)
+change the address in each file to your IP
+
+
 `frontend`
 
 For the best user experience, we recommend using our meticulously designed UI on a 13.3-inch display.
@@ -16,7 +25,29 @@ npm install
 npm start
 ```
 
-`backend`:
+`backend server`:
+```
+cd rpi_server
+pip install -r requirement.txt
+python new_server.py
+```
+
+
+`backend Database`:
+```
+cd rpi_server
+pip install -r requirement.txt
+python DB.py
+```
+
+
+`backend rpi`:
+```
+cd rpi_server
+pip install -r requirement_rpi.txt
+python client.py
+```
+
 
 `gesture`:
 
