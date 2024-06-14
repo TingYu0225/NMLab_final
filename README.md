@@ -24,7 +24,7 @@ change the address in each file to your IP
 
 ```
 cd rpi_server
-pip install -r requirement.txt
+pip install -r requirements.txt
 python new_server.py
 ```
 
@@ -32,18 +32,18 @@ python new_server.py
 `backend Database`:
 ```
 cd rpi_server
-pip install -r requirement.txt
+pip install -r requirements.txt
 python DB.py
 ```
 
 
 `backend rpi`:
 
-Change requirement.txt to other file name, and change requirement_rpi.txt file name into requirement.txt
+Change requirements.txt to other file name, and change requirements_rpi.txt file name into requirements.txt
 
 ```
 cd rpi_server
-pip install -r requirement_rpi.txt
+pip install -r requirements.txt
 python client.py
 ```
 
