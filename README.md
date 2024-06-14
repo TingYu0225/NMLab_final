@@ -4,9 +4,9 @@ This is a final project of NM Lab. In this project we create K-GESTURE, a system
 
 To try this system, please follow the steps below to run the independent service in each folder.
 
-`Demo video:` https://youtu.be/KKoi0AYM8q8
+`Demo Video:` https://youtu.be/KKoi0AYM8q8
 
-`report:` https://www.canva.com/design/DAGHv1_rFFg/7GlrajLiaEOtm3tAT6E8aQ/edit?utm_content=DAGHv1_rFFg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton  
+`Report:` https://www.canva.com/design/DAGHv1_rFFg/7GlrajLiaEOtm3tAT6E8aQ/edit?utm_content=DAGHv1_rFFg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton  
 
 `frontend`
 
