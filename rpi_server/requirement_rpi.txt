@@ -1,3 +1,0 @@
-requests
-hashlib
-tpm2_pytss
