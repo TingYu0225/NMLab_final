@@ -2,6 +2,15 @@
 
 A final project of NM Lab.
 
+For backend:
+
+(1)
+maybe you should modify "c" to capital "C" after you install Crypto
+
+(2)
+change the address in each file to your IP
+
+
 `frontend`
 
 ```
