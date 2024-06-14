@@ -64,7 +64,7 @@ const NMLabProvider = (props) => {
     setTakeFile(false);
     setFileUrl("");
     setFaceStatus("none");
-    setFileName([])
+    setFileName([]);
   };
   const chooseFile = (filename) => {
     console.log("chooseFile", filename);
@@ -78,7 +78,7 @@ const NMLabProvider = (props) => {
         if (log.data.done) {
           setTakeFile(false);
           setFileUrl(log.data.file);
-          clearInterval(waitTimer.current)
+          clearInterval(waitTimer.current);
         }
       }, 1000);
     }
