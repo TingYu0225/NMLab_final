@@ -9,7 +9,23 @@ npm install
 npm start
 ```
 
-`backend`:
+`backend server`:
+cd rpi_server
+pip install -r requirement.txt
+python new_server.py
+
+
+`backend Database`:
+cd rpi_server
+pip install -r requirement.txt
+python DB.py
+
+
+`backend Database`:
+cd rpi_server
+pip install -r requirement.txt
+python DB.py
+
 
 `gesture`:
 ```
