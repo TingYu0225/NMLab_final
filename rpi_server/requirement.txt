@@ -1,4 +1,3 @@
-///////// for server and DB /////////
 flask
 cryptography
 Crypto 
