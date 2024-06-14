@@ -4,6 +4,10 @@ This is a final project of NM Lab. In this project we create K-GESTURE, a system
 
 To try this system, please follow the steps below to run the independent service in each folder.
 
+`Demo video:` https://youtu.be/KKoi0AYM8q8
+
+`report:` https://www.canva.com/design/DAGHv1_rFFg/7GlrajLiaEOtm3tAT6E8aQ/edit?utm_content=DAGHv1_rFFg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton  
+
 `frontend`
 
 For the best user experience, we recommend using our meticulously designed UI on a 13.3-inch display.
@@ -49,6 +53,9 @@ python client.py
 
 
 `gesture`:
+The gesture folder contains code that performs gesture recognition tasks and operates a server that receives requests from the frontend. 
+
+Gesture recognition requires camera to work (duh).
 
 ```
 cd ./gesture
