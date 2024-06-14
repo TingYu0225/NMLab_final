@@ -53,7 +53,7 @@ let postImage = (endpoint, formData) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
+  // change to your server ip
   let url = `http://172.20.10.3:8080${endpoint}`;
   return axios
     .post(url, formData, customHeader)
@@ -80,7 +80,7 @@ let getInfo = (endpoint) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
+  // change to your server ip
   let url = `http://172.20.10.3:8080${endpoint}`;
   return axios
     .get(url, customHeader)
