@@ -213,6 +213,7 @@ def frontendchecklog():
     if request.method == 'GET':
         filenames = ["NewYear Gift", "Grimm's Fairy Tales"]
         loginDone = False
+        time.sleep(3)
         return jsonify({'status': 'success', 'done': True, 'filenames': filenames})
 
 
