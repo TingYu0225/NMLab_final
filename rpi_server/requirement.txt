@@ -8,8 +8,3 @@ flask_cors
 PIL
 requests
 secrets
-
-///////// for client ///////// 
-requests
-hashlib
-tpm2_pytss
